@@ -2,6 +2,9 @@ package com.bookmyshow.bookmyshow.controller;
 
 import com.bookmyshow.bookmyshow.model.Movie;
 import com.bookmyshow.bookmyshow.repository.MovieRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +24,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public Movie addMovie(@RequestBody Movie movie){
+    public Movie addMovie(@Valid @RequestBody Movie movie){
         return movieRepository.save(movie);
     }
 

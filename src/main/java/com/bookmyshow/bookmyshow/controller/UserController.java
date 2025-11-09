@@ -2,6 +2,9 @@ package com.bookmyshow.bookmyshow.controller;
 
 import com.bookmyshow.bookmyshow.model.User;
 import com.bookmyshow.bookmyshow.repository.UserRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User registerUser(@RequestBody User user){
+    public User registerUser(@Valid @RequestBody User user){
         return userRepository.save(user);
     }
 

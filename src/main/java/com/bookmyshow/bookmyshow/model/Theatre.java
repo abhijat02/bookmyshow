@@ -2,6 +2,8 @@ package com.bookmyshow.bookmyshow.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,7 +15,10 @@ public class Theatre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Theatre name is required")
     private String name;
+
+    @NotBlank(message = "Location is required")
     private String location;
 
     @OneToMany(mappedBy = "theatre", cascade = CascadeType.ALL)

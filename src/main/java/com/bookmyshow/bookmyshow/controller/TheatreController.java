@@ -2,6 +2,9 @@ package com.bookmyshow.bookmyshow.controller;
 
 import com.bookmyshow.bookmyshow.model.Theatre;
 import com.bookmyshow.bookmyshow.repository.TheatreRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +25,7 @@ public class TheatreController {
     }
 
     @PostMapping
-    public Theatre addTheatre(@RequestBody Theatre theatre){
+    public Theatre addTheatre(@Valid @RequestBody Theatre theatre){
         return theatreRepository.save(theatre);
     }
 }
