@@ -2,6 +2,9 @@ package com.bookmyshow.bookmyshow.controller;
 
 import com.bookmyshow.bookmyshow.model.*;
 import com.bookmyshow.bookmyshow.repository.*;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,12 +24,21 @@ public class BookingController {
     }
 
     @PostMapping
-    public Booking createBooking(@RequestParam Long userId, @RequestParam Long showtimeId, @RequestParam int seats){
+    public ResponseEntity<?> createBooking(@RequestParam Long userId, @RequestParam Long showtimeId, @RequestParam int seats){
         User user = userRepository.findById(userId).orElseThrow();
         Showtime showtime = showtimeRepository.findById(showtimeId).orElseThrow();
 
+        if(showtime.getAvailableSeats() < seats){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not enough seats available! Only " + showtime.getAvailableSeats() + " left.");
+        }
+
+        showtime.setAvailableSeats(showtime.getAvailableSeats() - seats);
+        showtimeRepository.save(showtime);
+
         Booking booking = new Booking(seats, LocalDateTime.now(), user, showtime);
-        return bookingRepository.save(booking);
+        bookingRepository.save(booking);
+
+        return ResponseEntity.ok(booking);
     }
 
     @GetMapping

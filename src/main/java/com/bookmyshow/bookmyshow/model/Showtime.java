@@ -10,6 +10,8 @@ public class Showtime {
     private Long id;
 
     private LocalDateTime showTime;
+    private int totalSeats = 100;
+    private int availableSeats = 100;
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
@@ -37,6 +39,22 @@ public class Showtime {
 
     public void setShowtime(LocalDateTime showTime){
         this.showTime = showTime;
+    }
+
+    public int getTotalSeats() {
+        return totalSeats;
+    }
+
+    public void setTotalSeats(int totalSeats) {
+        this.totalSeats = totalSeats;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
     }
 
     public Movie getMovie(){

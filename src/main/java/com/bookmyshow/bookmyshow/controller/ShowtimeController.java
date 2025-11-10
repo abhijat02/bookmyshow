@@ -2,6 +2,8 @@ package com.bookmyshow.bookmyshow.controller;
 
 import com.bookmyshow.bookmyshow.model.*;
 import com.bookmyshow.bookmyshow.repository.*;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +24,12 @@ public class ShowtimeController {
     @GetMapping
     public List<Showtime> getAllShowtimes(){
         return showtimeRepository.findAll();
+    }
+
+    @GetMapping("/{id}/availability")
+    public ResponseEntity<?> getAvailableSeats(@PathVariable Long id){
+        Showtime showtime = showtimeRepository.findById(id).orElseThrow();
+        return ResponseEntity.ok("Available seats: " + showtime.getAvailableSeats());
     }
 
     @PostMapping
