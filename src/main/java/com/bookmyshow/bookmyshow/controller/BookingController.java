@@ -35,10 +35,25 @@ public class BookingController {
         showtime.setAvailableSeats(showtime.getAvailableSeats() - seats);
         showtimeRepository.save(showtime);
 
-        Booking booking = new Booking(seats, LocalDateTime.now(), user, showtime);
+        double totalPrice = seats*showtime.getPricePerSeat();
+
+        Booking booking = new Booking(seats, LocalDateTime.now(), totalPrice, user, showtime);
         bookingRepository.save(booking);
 
         return ResponseEntity.ok(booking);
+    }
+
+    @DeleteMapping("/{bookingId}")
+    public ResponseEntity<?> cancelBooking(@PathVariable Long bookingId){
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow();
+        Showtime showtime = booking.getShowtime();
+
+        showtime.setAvailableSeats(showtime.getAvailableSeats() + booking.getNumberOfSeats());
+        showtimeRepository.save(showtime);
+
+        bookingRepository.delete(booking);
+
+        return ResponseEntity.ok("Booking cancelled successfully. Seats restored!");
     }
 
     @GetMapping

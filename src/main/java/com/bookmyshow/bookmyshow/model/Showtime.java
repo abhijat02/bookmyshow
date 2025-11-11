@@ -2,6 +2,7 @@ package com.bookmyshow.bookmyshow.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Showtime {
@@ -12,6 +13,7 @@ public class Showtime {
     private LocalDateTime showTime;
     private int totalSeats = 100;
     private int availableSeats = 100;
+    private double pricePerSeat = 250.0;
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
@@ -20,6 +22,9 @@ public class Showtime {
     @ManyToOne
     @JoinColumn(name = "theatre_id")
     private Theatre theatre;
+
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    private List<Booking> bookings; 
 
     public Showtime() {}
 
@@ -56,6 +61,15 @@ public class Showtime {
     public void setAvailableSeats(int availableSeats) {
         this.availableSeats = availableSeats;
     }
+
+    public double getPricePerSeat(){ 
+        return pricePerSeat; 
+    }
+
+    public void setPricePerSeat(double pricePerSeat){ 
+        this.pricePerSeat = pricePerSeat; 
+    }
+
 
     public Movie getMovie(){
         return movie;

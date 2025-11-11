@@ -13,6 +13,8 @@ public class Booking {
     private int numberOfSeats;
     private LocalDateTime bookingTime;
 
+    private double totalPrice;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -23,11 +25,12 @@ public class Booking {
 
     public Booking() {};
 
-    public Booking(int numberOfSeats, LocalDateTime bookingTime, User user, Showtime showtime){
+    public Booking(int numberOfSeats, LocalDateTime bookingTime, double totalPrice, User user, Showtime showtime){
         this.numberOfSeats = numberOfSeats;
         this.bookingTime = bookingTime;
         this.user = user;
         this.showtime = showtime;
+        this.totalPrice = totalPrice;
     }
 
     public Long getId() { return id; }
@@ -39,5 +42,7 @@ public class Booking {
     public void setUser(User user) { this.user = user; }
     public Showtime getShowtime() { return showtime; }
     public void setShowtime(Showtime showtime) { this.showtime = showtime; }
+    public double getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
 
 }
